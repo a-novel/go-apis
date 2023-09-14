@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-func GetCORS(allowedOrigins []string) cors.Config {
-	return cors.Config{
+func GetCORS(allowedOrigins []string) *cors.Config {
+	return &cors.Config{
 		AllowOrigins:     allowedOrigins,
 		AllowMethods:     cors.DefaultConfig().AllowMethods,
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
@@ -27,7 +27,7 @@ type RouterConfig struct {
 	// ProjectID is the ID of the Google Cloud project the application is deployed to.
 	// It is optional, and should only be used in production.
 	ProjectID string
-	CORS      cors.Config
+	CORS      *cors.Config
 	// Prod tells gin to use production settings.
 	Prod bool
 	// Health is a list of dependencies, to check for availability.
@@ -38,7 +38,11 @@ type RouterConfig struct {
 // "/healthcheck" and "/ping" routes.
 func GetRouter(cfg RouterConfig) *gin.Engine {
 	router := gin.New()
-	router.Use(gin.RecoveryWithWriter(cfg.Logger), Logger(cfg.Logger, cfg.ProjectID), cors.New(cfg.CORS))
+	router.Use(gin.RecoveryWithWriter(cfg.Logger), Logger(cfg.Logger, cfg.ProjectID))
+
+	if cfg.CORS != nil {
+		router.Use(cors.New(*cfg.CORS))
+	}
 
 	if cfg.Prod {
 		gin.SetMode(gin.ReleaseMode)

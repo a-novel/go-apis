@@ -1,0 +1,22 @@
+name: default
+
+on: [ push ]
+
+jobs:
+  # --------------------------------------------------------------------------------
+  # Test stage
+  # --------------------------------------------------------------------------------
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+      - name: Install test framework
+        run: go install gotest.tools/gotestsum@latest
+      - name: Test
+        env:
+          ENV: test
+        run: gotestsum --packages="./..." --junitfile report.xml --format pkgname -- -count=1 -p 1 -v -coverpkg=./...

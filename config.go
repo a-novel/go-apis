@@ -34,7 +34,7 @@ type RouterConfig struct {
 	Health map[string]HealthChecker
 }
 
-// GetRouter returns a new gin.Engine with custom defaults from the config object. It automatically allocates the
+// GetRouter returns a new gin.Engine with custom defaults from the config object. It automatically provides the
 // "/healthcheck" and "/ping" routes.
 func GetRouter(cfg RouterConfig) *gin.Engine {
 	router := gin.New()

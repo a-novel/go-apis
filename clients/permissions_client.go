@@ -56,7 +56,7 @@ func (a *permissionsClientImpl) SetUserPermissions(ctx context.Context, form Set
 }
 
 func (a *permissionsClientImpl) HasUserScope(ctx context.Context, query HasUserScopeQuery) error {
-	pathQuery := new(url.Values)
+	pathQuery := url.Values{}
 	pathQuery.Set("userID", query.UserID.String())
 	pathQuery.Set("scope", query.Scope)
 

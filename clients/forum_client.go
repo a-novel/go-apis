@@ -100,7 +100,7 @@ func (a *forumClientImpl) VoteImproveSuggestion(ctx context.Context, form Update
 }
 
 func (a *forumClientImpl) GetImproveRequest(ctx context.Context, query GetImproveRequestQuery) (*ImproveRequestPreview, error) {
-	pathQuery := new(url.Values)
+	pathQuery := url.Values{}
 	pathQuery.Set("id", query.ID.String())
 
 	path := a.url.JoinPath("/improve-request")
@@ -116,7 +116,7 @@ func (a *forumClientImpl) GetImproveRequest(ctx context.Context, query GetImprov
 }
 
 func (a *forumClientImpl) GetImproveSuggestion(ctx context.Context, query GetImproveSuggestionQuery) (*ImproveSuggestion, error) {
-	pathQuery := new(url.Values)
+	pathQuery := url.Values{}
 	pathQuery.Set("id", query.ID.String())
 
 	path := a.url.JoinPath("/improve-suggestion")

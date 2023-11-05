@@ -1,0 +1,9 @@
+with-expecter: True
+quiet: False
+mockname: "{{.InterfaceName}}"
+packages:
+  github.com/a-novel/go-apis/clients:
+    config:
+      all: True
+      outpkg: apiclientsmocks
+      dir: clients/mocks
